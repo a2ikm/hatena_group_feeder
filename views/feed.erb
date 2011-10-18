@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF
+	xmlns="http://purl.org/rss/1.0/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xml:lang="ja">
+<channel rdf:about="http://subtech.g.hatena.ne.jp/diarylist?mode=rss">
+	<title><%= @name %> 日記一覧</title>
+	<link>http://<%= @name %>.g.hatena.ne.jp</link>
+	<description><%= @name %>  日記一覧</description>
+	<items>
+	<rdf:Seq>
+	  <% @all_entries.each do |entry| %>
+		<rdf:li rdf:resource="<%= entry.link %>"/>
+		<% end %>
+	</rdf:Seq>
+	</items>
+</channel>
+<% @all_entries.each do |entry| %>
+<item rdf:about="<%= entry.link %>">
+	<title><%= entry.title %></title>
+	<link><%= entry.link %></link>
+	<description><%= entry.description %></description>
+	<content:encoded><![CDATA[
+    <%= entry.content_encoded %>
+	]]>
+	<dc:date><%= entry.datetime %></dc:date>
+</item>
+<% end %>
+</rdf:RDF>
